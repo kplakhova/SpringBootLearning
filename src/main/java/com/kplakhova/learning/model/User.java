@@ -3,6 +3,7 @@ package com.kplakhova.learning.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.omg.PortableInterceptor.USER_EXCEPTION;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class User {
@@ -29,6 +30,7 @@ public class User {
         this.email = email;
     }
 
+    @JsonProperty("id")
     public UUID getUserUid() {
         return userUid;
     }
@@ -51,6 +53,14 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+    public int getDateOfBirth() {
+        return LocalDate.now().minusYears(age).getYear();
     }
 
     public static User newUser(UUID userUid, User user) {
