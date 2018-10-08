@@ -13,16 +13,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@RestController
-@RequestMapping(
-        path = "/api/v1/users"
-)
-public class UserResource {
+//@RestController
+//@RequestMapping(
+//        path = "/api/v1/users"
+//)
+public class UserResourceSpringMVC {
 
     private UserService userService;
 
     @Autowired
-    public UserResource(UserService userService) {
+    public UserResourceSpringMVC(UserService userService) {
         this.userService = userService;
     }
 
@@ -63,7 +63,6 @@ public class UserResource {
     public ResponseEntity<Integer> updateUser(@RequestBody User user) {
         int result = userService.updateUser(user);
         return getIntegerResponseEntity(result);
-
     }
 
     @RequestMapping(
@@ -83,19 +82,4 @@ public class UserResource {
         return ResponseEntity.badRequest().build();
     }
 
-    class ErrorMessage {
-        String errorMessage;
-
-        public ErrorMessage(String message) {
-            this.errorMessage = message;
-        }
-
-        public String getErrorMessage() {
-            return errorMessage;
-        }
-
-        public void setErrorMessage(String errorMessage) {
-            this.errorMessage = errorMessage;
-        }
-    }
 }
