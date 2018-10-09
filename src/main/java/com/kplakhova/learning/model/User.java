@@ -1,7 +1,6 @@
 package com.kplakhova.learning.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.omg.PortableInterceptor.USER_EXCEPTION;
 
 import java.time.LocalDate;
 import java.util.UUID;
