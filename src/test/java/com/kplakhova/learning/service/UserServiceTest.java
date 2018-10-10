@@ -144,7 +144,7 @@ public class UserServiceTest {
         User anna = new User(null, "anna", "montana",
                 User.Gender.FEMALE, 30, "anna@gmail.com");
 
-        given(fakeDataDao.insertUser(any(UUID.class), eq(anna))).willReturn(1);
+        given(fakeDataDao.insertUser(any(UUID.class), any(User.class))).willReturn(1);
 
         ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
 
