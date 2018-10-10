@@ -17,20 +17,20 @@ public interface UserResourceV1 {
     @GET
     @Produces(APPLICATION_JSON)
     @Path("{userUid}")
-    Response fetchUser(@PathParam("userUid") UUID userUid);
+    User fetchUser(@PathParam("userUid") UUID userUid);
 
     @POST
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    Response insertNewUser(User user);
+    void insertNewUser(User user);
 
     @PUT
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    Response updateUser(User user);
+    void updateUser(User user);
 
     @DELETE
     @Produces(APPLICATION_JSON)
     @Path("{userUid}")
-    Response deleteUser(@PathParam("userUid") UUID userUid);
+    void deleteUser(@PathParam("userUid") UUID userUid);
 }
