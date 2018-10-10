@@ -59,4 +59,25 @@ public class LearningApplicationTests {
         assertThatThrownBy(() -> userResourceV1.fetchUser(userUid))
                 .isInstanceOf(NotFoundException.class);
     }
+
+    @Test
+    public void shouldUpdateUser() {
+        //Given
+        UUID userUid = UUID.randomUUID();
+        User user = new User(userUid, "Joe", "Jones",
+                User.Gender.MALE, 22, "joe.jones@gmail.com");
+
+        //When
+        userResourceV1.insertNewUser(user);
+
+        User updatedUser = new User(userUid, "Alex", "Jones",
+                User.Gender.MALE, 55, "alex.jones@gmail.com");
+
+        userResourceV1.updateUser(updatedUser);
+
+        //Then
+        user = userResourceV1.fetchUser(userUid);
+        assertThat(user).isEqualToComparingFieldByField(updatedUser);
+
+    }
 }
