@@ -5,6 +5,7 @@ import com.kplakhova.learning.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.ws.rs.NotFoundException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -47,29 +48,18 @@ public class UserService {
         if (optionalUser.isPresent()) {
             return userDao.updateUser(user);
         }
-        return -1;
+        throw new NotFoundException("user " + user.getUserUid() + " not found");
     }
 
-    public int removeUser(UUID userUid) {
-        Optional<User> optionalUser = getUser(userUid);
-        if (optionalUser.isPresent()) {
-            return userDao.deleteUserByUserUid(userUid);
-        }
-        return -1;
-
+    public int removeUser(UUID uid) {
+        UUID userUid = getUser(uid)
+                .map(User::getUserUid)
+                .orElseThrow(() -> new NotFoundException("user " + uid + " not found"));
+        return userDao.deleteUserByUserUid(uid);
     }
 
     public int insertUser(User user) {
         UUID userUid = user.getUserUid() == null ? UUID.randomUUID() : user.getUserUid();
         return userDao.insertUser(userUid, user.newUser(userUid, user));
-    }
-
-    private void validateUser(User user) {
-        requireNonNull(user.getFirstName(), "first name required");
-        requireNonNull(user.getLastName(), "last name required");
-        requireNonNull(user.getAge(), "age required");
-        requireNonNull(user.getEmail(), "email required");
-        // validate the email
-        requireNonNull(user.getGender(), "gender required");
     }
 }
