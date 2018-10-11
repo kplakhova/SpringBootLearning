@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.requireNonNull;
 
 @Service
 public class UserService {
@@ -58,6 +61,16 @@ public class UserService {
 
     public int insertUser(User user) {
         UUID userUid = user.getUserUid() == null ? UUID.randomUUID() : user.getUserUid();
+        validateUser(user);
         return userDao.insertUser(userUid, user.newUser(userUid, user));
+    }
+
+    private void validateUser(User user) {
+        requireNonNull(user.getFirstName(), "first name required");
+        requireNonNull(user.getLastName(), "last name required");
+        requireNonNull(user.getAge(), "age required");
+        requireNonNull(user.getEmail(), "email required");
+        // validate the email
+        requireNonNull(user.getGender(), "gender required");
     }
 }
